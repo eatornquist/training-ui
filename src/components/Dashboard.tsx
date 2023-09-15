@@ -20,7 +20,7 @@ import SettingsIcon from '@mui/icons-material/Settings'
 import { mainListItems, secondaryListItems } from './listItems'
 // import Chart from './Chart'
 // import Deposits from './Deposits'
-import Orders from './Orders'
+import CommunityList from './CommunityList'
 import { Navbar } from './Navbar'
 import { Drawer } from './Drawer'
 
@@ -159,7 +159,7 @@ export default function Dashboard() {
               {/* Recent Orders */}
               <Grid item xs={12}>
                 <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
-                  <Orders />
+                  <CommunityList />
                 </Paper>
               </Grid>
             </Grid>
