@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { styled, createTheme, ThemeProvider } from '@mui/material/styles'
+import { createTheme, ThemeProvider } from '@mui/material/styles'
 import CssBaseline from '@mui/material/CssBaseline'
 import Box from '@mui/material/Box'
 import Toolbar from '@mui/material/Toolbar'
@@ -15,9 +15,11 @@ import Link from '@mui/material/Link'
 import MenuIcon from '@mui/icons-material/Menu'
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
 import NotificationsIcon from '@mui/icons-material/Notifications'
+import HelpOutlineIcon from '@mui/icons-material/HelpOutline'
+import SettingsIcon from '@mui/icons-material/Settings'
 import { mainListItems, secondaryListItems } from './listItems'
-import Chart from './Chart'
-import Deposits from './Deposits'
+// import Chart from './Chart'
+// import Deposits from './Deposits'
 import Orders from './Orders'
 import { Navbar } from './Navbar'
 import { Drawer } from './Drawer'
@@ -78,9 +80,15 @@ export default function Dashboard() {
               noWrap
               sx={{ flexGrow: 1 }}
             >
-              Dashboard
+              HomeBuilderOS
             </Typography>
             <IconButton color="inherit">
+              <Badge color="secondary">
+                <HelpOutlineIcon />
+              </Badge>
+              <Badge color="primary">
+                <SettingsIcon />
+              </Badge>
               <Badge badgeContent={4} color="secondary">
                 <NotificationsIcon />
               </Badge>
@@ -121,9 +129,9 @@ export default function Dashboard() {
         >
           <Toolbar />
           <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-            <Grid container spacing={3}>
+            <Grid container spacing={1}>
               {/* Chart */}
-              <Grid item xs={12} md={8} lg={9}>
+              {/* <Grid item xs={12} md={8} lg={9}>
                 <Paper
                   sx={{
                     p: 2,
@@ -134,9 +142,9 @@ export default function Dashboard() {
                 >
                   <Chart />
                 </Paper>
-              </Grid>
+              </Grid> */}
               {/* Recent Deposits */}
-              <Grid item xs={12} md={4} lg={3}>
+              {/* <Grid item xs={12} md={4} lg={3}>
                 <Paper
                   sx={{
                     p: 2,
@@ -147,7 +155,7 @@ export default function Dashboard() {
                 >
                   <Deposits />
                 </Paper>
-              </Grid>
+              </Grid> */}
               {/* Recent Orders */}
               <Grid item xs={12}>
                 <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
