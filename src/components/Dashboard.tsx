@@ -140,7 +140,16 @@ export default function Dashboard() {
           }}
         >
           <Toolbar />
-          <Container maxWidth="lg" sx={{ mt: 10, mb: 4, mr: 2, ml: 2 }}>
+          <Container maxWidth="lg" sx={{ mt: 4, mb: 4, mr: 2, ml: 2 }}>
+            <Typography
+              component="h1"
+              variant="h4"
+              color="inherit"
+              noWrap
+              sx={{ flexGrow: 1, mb: 2 }}
+            >
+              Community Overview
+            </Typography>
             <Grid container spacing={1}>
               {/* Chart */}
               {/* <Grid item xs={12} md={8} lg={9}>
