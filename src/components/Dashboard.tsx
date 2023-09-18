@@ -25,6 +25,11 @@ import { Navbar } from './Navbar'
 import { Drawer } from './Drawer'
 import ButtonGroup from '@mui/material/ButtonGroup'
 import Button from '@mui/material/Button'
+import FormControl from '@mui/material/FormControl'
+import InputLabel from '@mui/material/InputLabel'
+import InputAdornment from '@mui/material/InputAdornment'
+import FilledInput from '@mui/material/FilledInput'
+import SearchIcon from '@mui/icons-material/Search'
 
 function Copyright(props: any) {
   return (
@@ -218,6 +223,22 @@ export default function Dashboard() {
                     flexDirection: 'column',
                   }}
                 >
+                  <FormControl
+                    fullWidth
+                    variant="filled"
+                    size="small"
+                    sx={{ m: 1, width: '35ch' }}
+                  >
+                    <FilledInput
+                      sx={{ height: '4ch' }}
+                      id="filled-adornment-amount"
+                      startAdornment={
+                        <InputAdornment position="start" sx={{ mb: 1.5 }}>
+                          <SearchIcon /> Search for community or homesite
+                        </InputAdornment>
+                      }
+                    />
+                  </FormControl>
                   <CommunityList />
                 </Paper>
               </Grid>
