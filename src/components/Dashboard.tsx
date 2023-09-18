@@ -140,7 +140,7 @@ export default function Dashboard() {
           }}
         >
           <Toolbar />
-          <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+          <Container maxWidth="lg" sx={{ mt: 10, mb: 4, mr: 2, ml: 2 }}>
             <Grid container spacing={1}>
               {/* Chart */}
               {/* <Grid item xs={12} md={8} lg={9}>
@@ -169,8 +169,14 @@ export default function Dashboard() {
                 </Paper>
               </Grid> */}
               {/* Recent Orders */}
-              <Grid item xs={12}>
-                <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
+              <Grid item lg={12}>
+                <Paper
+                  sx={{
+                    p: 2,
+                    display: 'flex',
+                    flexDirection: 'column',
+                  }}
+                >
                   <CommunityList />
                 </Paper>
               </Grid>
