@@ -43,7 +43,16 @@ function Copyright(props: any) {
 }
 
 // TODO remove, this demo shouldn't need to reset the theme.
-const defaultTheme = createTheme()
+const defaultTheme = createTheme({
+  palette: {
+    primary: {
+      main: '#003c77',
+    },
+    secondary: {
+      main: '#CC0B08',
+    },
+  },
+})
 
 export default function Dashboard() {
   const [open, setOpen] = React.useState(true)
@@ -55,11 +64,7 @@ export default function Dashboard() {
     <ThemeProvider theme={defaultTheme}>
       <Box sx={{ display: 'flex' }}>
         <CssBaseline />
-        <Navbar
-          style={{ background: '#003c77' }}
-          position="absolute"
-          open={open}
-        >
+        <Navbar position="absolute" open={open} color="primary">
           <Toolbar
             sx={{
               pr: '24px', // keep right padding when drawer closed
