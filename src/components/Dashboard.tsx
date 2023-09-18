@@ -17,7 +17,7 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
 import NotificationsIcon from '@mui/icons-material/Notifications'
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline'
 import SettingsIcon from '@mui/icons-material/Settings'
-import { mainListItems, secondaryListItems } from './listItems'
+import { mainListItems } from './listItems'
 // import Chart from './Chart'
 // import Deposits from './Deposits'
 import CommunityList from './CommunityList'
@@ -123,8 +123,8 @@ export default function Dashboard() {
           <Divider />
           <List component="nav">
             {mainListItems}
-            <Divider sx={{ my: 1 }} />
-            {secondaryListItems}
+            {/* <Divider sx={{ my: 1 }} /> */}
+            {/* {secondaryListItems} */}
           </List>
         </Drawer>
         <Box
