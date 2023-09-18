@@ -32,6 +32,14 @@ export const communityRowsData = [
   createData(26176, 'Azalea Village SFR', 35, 0, 208, 0, 2, 208, 208, 'Active'),
   createData(26187, 'Candleberry Place', 35, 0, 208, 0, 2, 208, 208, 'Active'),
   createData(7601, 'Cedar Grove', 35, 0, 208, 0, 2, 208, 208, 'Active'),
+  createData(7695, 'Aspen Groove', 0, 35, 45, 0, 2, 0, 0, 'Active'),
+  createData(26176, 'Azalea Village SFR', 35, 0, 208, 0, 2, 208, 208, 'Active'),
+  createData(26187, 'Candleberry Place', 35, 0, 208, 0, 2, 208, 208, 'Active'),
+  createData(7601, 'Cedar Grove', 35, 0, 208, 0, 2, 208, 208, 'Active'),
+  createData(7695, 'Aspen Groove', 0, 35, 45, 0, 2, 0, 0, 'Active'),
+  createData(26176, 'Azalea Village SFR', 35, 0, 208, 0, 2, 208, 208, 'Active'),
+  createData(26187, 'Candleberry Place', 35, 0, 208, 0, 2, 208, 208, 'Active'),
+  createData(7601, 'Cedar Grove', 35, 0, 208, 0, 2, 208, 208, 'Active'),
 ]
 
 // export const communityColumnsData: GridColDef[] = [
