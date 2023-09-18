@@ -55,6 +55,10 @@ const defaultTheme = createTheme({
       main: '#CC0B08',
     },
   },
+  // typography: {
+  //   fontFamily: ['Hoefler text', 'Arial'].join(','),
+  //   fontSize: 15,
+  // },
 })
 
 export default function Dashboard() {
@@ -86,6 +90,8 @@ export default function Dashboard() {
               <MenuIcon />
             </IconButton>
             <Typography
+              fontFamily={'Hoefler text'}
+              fontSize={30}
               component="h1"
               variant="h6"
               color="inherit"
@@ -142,11 +148,12 @@ export default function Dashboard() {
           <Toolbar />
           <Container maxWidth="lg" sx={{ mt: 4, mb: 4, mr: 2, ml: 2 }}>
             <Typography
+              fontFamily={'Hoefler text'}
               component="h1"
               variant="h4"
               color="inherit"
               noWrap
-              sx={{ flexGrow: 1, mb: 2 }}
+              sx={{ flexGrow: 1, mb: 3 }}
             >
               Community Overview
             </Typography>
