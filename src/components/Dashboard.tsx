@@ -23,6 +23,8 @@ import { mainListItems } from './listItems'
 import CommunityList from './CommunityList'
 import { Navbar } from './Navbar'
 import { Drawer } from './Drawer'
+import ButtonGroup from '@mui/material/ButtonGroup'
+import Button from '@mui/material/Button'
 
 function Copyright(props: any) {
   return (
@@ -146,7 +148,30 @@ export default function Dashboard() {
           }}
         >
           <Toolbar />
-          <Container maxWidth="lg" sx={{ mt: 4, mb: 4, mr: 2, ml: 2 }}>
+          <Grid
+            item
+            container
+            direction={'column'}
+            alignItems={'flex-end'}
+            // justifyContent={'flex-start'}
+            sx={{ mt: 2, ml: -4.5 }}
+          >
+            <ButtonGroup
+              variant="contained"
+              aria-label="Disabled elevation buttons"
+            >
+              <Button style={{ color: '#003c77', background: 'white' }}>
+                Community
+              </Button>
+              <Button
+                disabled
+                // style={{ color: '#003c77', background: 'white' }}
+              >
+                Monthly
+              </Button>
+            </ButtonGroup>
+          </Grid>
+          <Container maxWidth="lg" sx={{ mt: -4.5, mb: 4, mr: 2, ml: 2 }}>
             <Typography
               fontFamily={'Hoefler text'}
               component="h1"
