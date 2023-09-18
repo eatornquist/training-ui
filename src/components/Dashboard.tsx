@@ -55,7 +55,11 @@ export default function Dashboard() {
     <ThemeProvider theme={defaultTheme}>
       <Box sx={{ display: 'flex' }}>
         <CssBaseline />
-        <Navbar position="absolute" open={open}>
+        <Navbar
+          style={{ background: '#003c77' }}
+          position="absolute"
+          open={open}
+        >
           <Toolbar
             sx={{
               pr: '24px', // keep right padding when drawer closed
