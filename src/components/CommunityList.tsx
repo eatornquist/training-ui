@@ -16,14 +16,14 @@ export default function CommunityList() {
   return (
     <React.Fragment>
       {/* <Title>Recent Orders</Title> */}
-      <Table size="medium">
+      <Table style={{ width: 1750 }}>
         <TableHead>
           <TableRow>
             <TableCell>Community</TableCell>
             <TableCell>Community Id</TableCell>
             <TableCell>Forecasted</TableCell>
             <TableCell>Projected</TableCell>
-            <TableCell align="right">Total Homesites</TableCell>
+            <TableCell>Total Homesites</TableCell>
             <TableCell>Panneled</TableCell>
             <TableCell>Permitted</TableCell>
             <TableCell>SOP</TableCell>

@@ -178,7 +178,7 @@ export default function Dashboard() {
                 </Paper>
               </Grid> */}
               {/* Recent Orders */}
-              <Grid item lg={12}>
+              <Grid>
                 <Paper
                   sx={{
                     p: 2,
@@ -190,7 +190,7 @@ export default function Dashboard() {
                 </Paper>
               </Grid>
             </Grid>
-            <Copyright sx={{ pt: 4 }} />
+            {/* <Copyright sx={{ pt: 4 }} /> */}
           </Container>
         </Box>
       </Box>
