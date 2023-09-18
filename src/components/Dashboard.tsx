@@ -49,6 +49,9 @@ const defaultTheme = createTheme({
       main: '#003c77',
     },
     secondary: {
+      main: '#3e5463',
+    },
+    warning: {
       main: '#CC0B08',
     },
   },
@@ -98,7 +101,7 @@ export default function Dashboard() {
               <Badge color="primary">
                 <SettingsIcon />
               </Badge>
-              <Badge badgeContent={4} color="secondary">
+              <Badge badgeContent={4} color="warning">
                 <NotificationsIcon />
               </Badge>
             </IconButton>
