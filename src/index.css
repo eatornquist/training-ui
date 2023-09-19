@@ -54,3 +54,8 @@
   padding-right: 10px;
   box-shadow: 0 0 24px 0 rgba(0, 0, 0, 0.12);
 }
+
+.table-cell {
+  border: '1px solid';
+  border-color: '#f4f6f9';
+}

@@ -32,14 +32,79 @@ export const communityRowsData = [
   createData(26176, 'Azalea Village SFR', 35, 0, 208, 0, 2, 208, 208, 'Active'),
   createData(26187, 'Candleberry Place', 35, 0, 208, 0, 2, 208, 208, 'Active'),
   createData(7601, 'Cedar Grove', 35, 0, 208, 0, 2, 208, 208, 'Active'),
-  createData(7695, 'Aspen Groove', 0, 35, 45, 0, 2, 0, 0, 'Active'),
-  createData(26176, 'Azalea Village SFR', 35, 0, 208, 0, 2, 208, 208, 'Active'),
-  createData(26187, 'Candleberry Place', 35, 0, 208, 0, 2, 208, 208, 'Active'),
-  createData(7601, 'Cedar Grove', 35, 0, 208, 0, 2, 208, 208, 'Active'),
-  createData(7695, 'Aspen Groove', 0, 35, 45, 0, 2, 0, 0, 'Active'),
-  createData(26176, 'Azalea Village SFR', 35, 0, 208, 0, 2, 208, 208, 'Active'),
-  createData(26187, 'Candleberry Place', 35, 0, 208, 0, 2, 208, 208, 'Active'),
-  createData(7601, 'Cedar Grove', 35, 0, 208, 0, 2, 208, 208, 'Active'),
+  createData(
+    68809,
+    'Dartmoor At Mountian Crest',
+    0,
+    35,
+    45,
+    0,
+    2,
+    0,
+    0,
+    'Active'
+  ),
+  createData(7669, 'Deerhaven SFR', 35, 0, 208, 0, 2, 208, 208, 'Active'),
+  createData(26174, 'Envoy at Ponce TH', 35, 0, 208, 0, 2, 208, 208, 'Active'),
+  createData(26152, 'Erkside Road', 35, 0, 208, 5, 2, 208, 208, 'Active'),
+  createData(26132, 'Fernhust', 0, 35, 45, 0, 2, 0, 0, 'Active'),
+  createData(
+    26193,
+    'Gainsville Township',
+    35,
+    0,
+    208,
+    0,
+    2,
+    208,
+    208,
+    'Active'
+  ),
+  createData(7649, 'Haddonstone II', 35, 0, 208, 0, 2, 208, 208, 'Active'),
+  createData(26179, 'Hawkings Manor', 35, 0, 208, 0, 2, 208, 208, 'Active'),
+]
+
+export const tableHeaderData = [
+  {
+    id: 1,
+    header: 'Community',
+  },
+  {
+    id: 2,
+    header: 'Community Id',
+  },
+  {
+    id: 3,
+    header: 'Forecasted',
+  },
+  {
+    id: 4,
+    header: 'Projected',
+  },
+  {
+    id: 5,
+    header: 'Total Homesites',
+  },
+  {
+    id: 6,
+    header: 'Paneled',
+  },
+  {
+    id: 7,
+    header: 'Permitted',
+  },
+  {
+    id: 8,
+    header: 'SOP',
+  },
+  {
+    id: 9,
+    header: 'Trenched',
+  },
+  {
+    id: 10,
+    header: 'Action',
+  },
 ]
 
 // export const communityColumnsData: GridColDef[] = [

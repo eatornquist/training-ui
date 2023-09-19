@@ -135,11 +135,11 @@ export default function Dashboard() {
                 </Badge>
               </IconButton>
               <IconButton color="secondary" sx={{ mr: 2 }}>
-                <Avatar sx={{ background: '#e3ac40' }}>
+                <Avatar sx={{ background: '#ffc107' }}>
                   <Button
                     style={{
                       color: 'primary',
-                      background: '#e3ac40',
+                      background: '#ffc107',
                       fontSize: 12,
                     }}
                   >
@@ -253,11 +253,12 @@ export default function Dashboard() {
                     flexDirection: 'column',
                   }}
                 >
+                  <Divider sx={{ my: 1 }} />
                   <FormControl
                     fullWidth
                     variant="filled"
                     size="small"
-                    sx={{ m: 1, width: '35ch' }}
+                    sx={{ m: 1, width: '40ch', mb: 2 }}
                   >
                     <FilledInput
                       sx={{ height: '4ch' }}
