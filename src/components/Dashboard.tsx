@@ -26,11 +26,15 @@ import { Drawer } from './Drawer'
 import ButtonGroup from '@mui/material/ButtonGroup'
 import Button from '@mui/material/Button'
 import FormControl from '@mui/material/FormControl'
-import InputLabel from '@mui/material/InputLabel'
+// import InputLabel from '@mui/material/InputLabel'
 import InputAdornment from '@mui/material/InputAdornment'
 import FilledInput from '@mui/material/FilledInput'
 import SearchIcon from '@mui/icons-material/Search'
 import { Avatar } from '@mui/material'
+import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight'
+import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft'
+import DownloadIcon from '@mui/icons-material/Download'
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
 
 function Copyright(props: any) {
   return (
@@ -57,7 +61,7 @@ const defaultTheme = createTheme({
       main: '#003c77',
     },
     secondary: {
-      main: '#3e5463',
+      main: '#1f75bb',
     },
     warning: {
       main: '#CC0B08',
@@ -270,6 +274,32 @@ export default function Dashboard() {
                       }
                     />
                   </FormControl>
+                  <div
+                    style={{
+                      marginLeft: 1500,
+                      marginBottom: 25,
+                      marginTop: -50,
+                    }}
+                  >
+                    <Button
+                      color="secondary"
+                      variant="outlined"
+                      sx={{
+                        width: 150,
+                        fontWeight: 'bold',
+                        borderWidth: 3,
+                      }}
+                    >
+                      <KeyboardArrowLeftIcon sx={{ width: 15 }} />
+                      FY 2023
+                      <KeyboardArrowRightIcon sx={{ width: 15 }} />
+                    </Button>
+                    <DownloadIcon color="secondary" sx={{ ml: 3, mb: -1 }} />
+                    <KeyboardArrowDownIcon
+                      color="secondary"
+                      sx={{ mb: -0.8 }}
+                    />
+                  </div>
                   <CommunityList />
                 </Paper>
               </Grid>
