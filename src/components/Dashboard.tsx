@@ -14,9 +14,9 @@ import Paper from '@mui/material/Paper'
 import Link from '@mui/material/Link'
 import MenuIcon from '@mui/icons-material/Menu'
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
-import NotificationsIcon from '@mui/icons-material/Notifications'
+import NotificationsIconOutlined from '@mui/icons-material/NotificationsOutlined'
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline'
-import SettingsIcon from '@mui/icons-material/Settings'
+import SettingsIconOutlined from '@mui/icons-material/SettingsOutlined'
 import { mainListItems } from './listItems'
 // import Chart from './Chart'
 // import Deposits from './Deposits'
@@ -30,6 +30,7 @@ import InputLabel from '@mui/material/InputLabel'
 import InputAdornment from '@mui/material/InputAdornment'
 import FilledInput from '@mui/material/FilledInput'
 import SearchIcon from '@mui/icons-material/Search'
+import { Avatar } from '@mui/material'
 
 function Copyright(props: any) {
   return (
@@ -107,17 +108,46 @@ export default function Dashboard() {
             >
               HomeBuilderOS
             </Typography>
-            <IconButton color="inherit">
-              <Badge color="secondary">
+            <div style={{ marginRight: -20 }}>
+              <IconButton color="inherit" sx={{ mr: 2 }}>
+                <Button
+                  style={{
+                    background: 'white',
+                    color: 'primary',
+                    fontSize: 10,
+                    fontWeight: 'bold',
+                    height: 28,
+                    borderRadius: 20,
+                  }}
+                >
+                  Division: Boise
+                </Button>
+              </IconButton>
+              <IconButton color="inherit" sx={{ mr: 2 }}>
                 <HelpOutlineIcon />
-              </Badge>
-              <Badge color="primary">
-                <SettingsIcon />
-              </Badge>
-              <Badge badgeContent={4} color="warning">
-                <NotificationsIcon />
-              </Badge>
-            </IconButton>
+              </IconButton>
+              <IconButton color="inherit" sx={{ mr: 2 }}>
+                <SettingsIconOutlined />
+              </IconButton>
+              <IconButton color="inherit" sx={{ mr: 2 }}>
+                <Badge badgeContent={4} color="warning">
+                  <NotificationsIconOutlined />
+                </Badge>
+              </IconButton>
+              <IconButton color="secondary" sx={{ mr: 2 }}>
+                <Avatar sx={{ background: '#e3ac40' }}>
+                  <Button
+                    style={{
+                      color: 'primary',
+                      background: '#e3ac40',
+                      fontSize: 12,
+                    }}
+                  >
+                    ET
+                  </Button>
+                </Avatar>
+              </IconButton>
+            </div>
           </Toolbar>
         </Navbar>
         <Drawer variant="permanent" open={open}>
