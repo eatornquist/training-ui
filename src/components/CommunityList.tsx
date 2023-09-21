@@ -77,13 +77,7 @@ const CommunityList: React.FC<dataProps> = ({ data }) => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {(rowsPerPage > 0
-            ? tableHeaderData.slice(
-                page * rowsPerPage,
-                page * rowsPerPage + rowsPerPage
-              )
-            : data
-          ).map((row) => {
+          {data.map((row) => {
             forecastedSum += row.forecasted
             projectedSum += row.projected
             totalHomesitesSum += row.totalHomesites
