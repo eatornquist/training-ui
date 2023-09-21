@@ -1,4 +1,5 @@
 import * as React from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
 import CssBaseline from '@mui/material/CssBaseline'
 import Box from '@mui/material/Box'
@@ -30,11 +31,13 @@ import FormControl from '@mui/material/FormControl'
 import InputAdornment from '@mui/material/InputAdornment'
 import FilledInput from '@mui/material/FilledInput'
 import SearchIcon from '@mui/icons-material/Search'
-import { Avatar } from '@mui/material'
+import { Avatar, InputLabel, OutlinedInput, TextField } from '@mui/material'
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight'
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft'
 import DownloadIcon from '@mui/icons-material/Download'
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
+import { debounce } from 'lodash'
+import { communityRowsData } from '../data'
 
 function Copyright(props: any) {
   return (
@@ -54,7 +57,6 @@ function Copyright(props: any) {
   )
 }
 
-// TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme({
   palette: {
     primary: {
@@ -73,11 +75,70 @@ const defaultTheme = createTheme({
   // },
 })
 
+export type ICommunities = {
+  id: number
+  community: string
+  forecasted: number
+  projected: number
+  totalHomesites: number
+  paneled: number
+  permitted: number
+  sop: number
+  trenched: number
+  communityStatus: string
+}
+
 export default function Dashboard() {
   const [open, setOpen] = React.useState(true)
   const toggleDrawer = () => {
     setOpen(!open)
   }
+
+  const [communities, setAllCommunities] = useState<ICommunities[]>([])
+  const allCommunitiesCache = useRef<ICommunities[]>([])
+
+  const applySearch = debounce(
+    (val: string) =>
+      setAllCommunities(
+        allCommunitiesCache.current.filter((el) =>
+          el.community.toLocaleLowerCase().includes(val.toLocaleLowerCase())
+        )
+      ),
+    300
+  )
+
+  const handleSearchTextChange = (
+    evt: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const searchValue = evt.target.value
+    applySearch.cancel()
+    if (!searchValue.length) {
+      setAllCommunities(allCommunitiesCache.current)
+    }
+    console.log(searchValue)
+    applySearch(searchValue)
+  }
+
+  useEffect(() => {
+    setAllCommunities([
+      {
+        id: 7669,
+        community: 'Deerhaven SFR',
+        forecasted: 35,
+        projected: 0,
+        totalHomesites: 208,
+        paneled: 0,
+        permitted: 2,
+        sop: 208,
+        trenched: 208,
+        communityStatus: 'active',
+      },
+    ])
+  }, [])
+
+  // useEffect(() => {
+  //   setAllCommunities(communityRowsData)
+  // }, [])
 
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -117,7 +178,7 @@ export default function Dashboard() {
                 <Button
                   style={{
                     background: 'white',
-                    color: 'primary',
+                    color: 'secondary',
                     fontSize: 10,
                     fontWeight: 'bold',
                     height: 28,
@@ -258,7 +319,7 @@ export default function Dashboard() {
                   }}
                 >
                   <Divider sx={{ my: 1 }} />
-                  <FormControl
+                  {/* <FormControl
                     fullWidth
                     variant="filled"
                     size="small"
@@ -269,11 +330,52 @@ export default function Dashboard() {
                       id="filled-adornment-amount"
                       startAdornment={
                         <InputAdornment position="start" sx={{ mb: 1.5 }}>
-                          <SearchIcon /> Search for community or homesite
+                          <SearchIcon />
                         </InputAdornment>
                       }
                     />
-                  </FormControl>
+                  </FormControl> */}
+
+                  {/* <FormControl
+                    sx={{ m: 1, width: '40ch' }}
+                    variant="filled"
+                    size="small"
+                  >
+                    <InputLabel htmlFor="">
+                      🔍 Search for community or homesite
+                    </InputLabel>
+                    <FilledInput
+                      id="filled-adornment-password"
+                      type={'text'}
+                      // startAdornment={
+                      //   <InputAdornment position="start">
+                      //     <SearchIcon />
+                      //   </InputAdornment>
+                      // }
+                    />
+                  </FormControl> */}
+
+                  <TextField
+                    id="input-with-icon-adornment"
+                    variant="filled"
+                    placeholder="Search for community or homesite"
+                    size="small"
+                    InputProps={{
+                      startAdornment: (
+                        <InputAdornment position="start">
+                          <SearchIcon />
+                        </InputAdornment>
+                      ),
+                    }}
+                    inputProps={{
+                      'data-testid': 'search-text-field',
+                    }}
+                    style={{
+                      width: '30%',
+                    }}
+                    onChange={handleSearchTextChange}
+                  />
+
                   <div
                     style={{
                       marginLeft: 1500,
@@ -300,7 +402,7 @@ export default function Dashboard() {
                       sx={{ mb: -0.8 }}
                     />
                   </div>
-                  <CommunityList />
+                  <CommunityList data={communities} />
                 </Paper>
               </Grid>
             </Grid>

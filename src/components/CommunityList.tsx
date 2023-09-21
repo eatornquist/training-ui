@@ -6,15 +6,32 @@ import TableCell from '@mui/material/TableCell'
 import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 // import Title from './Title'
-import { communityRowsData, tableHeaderData } from '../data'
+import { tableHeaderData } from '../data'
 import { TableFooter, TablePagination } from '@mui/material'
-import { Label } from '@mui/icons-material'
+// import { Label } from '@mui/icons-material'
+import { ICommunities } from './Dashboard'
 
 // function preventDefault(event: React.MouseEvent) {
 //   event.preventDefault()
 // }
 
-export default function CommunityList() {
+export interface dataProps {
+  data: {
+    id: number
+    community: string
+    forecasted: number
+    projected: number
+    totalHomesites: number
+    paneled: number
+    permitted: number
+    sop: number
+    trenched: number
+    communityStatus: string
+  }[]
+}
+
+// export default function CommunityList(props: IRecentForecast) {
+const CommunityList: React.FC<dataProps> = ({ data }) => {
   let forecastedSum: number = 0
   let projectedSum: number = 0
   let totalHomesitesSum: number = 0
@@ -61,11 +78,11 @@ export default function CommunityList() {
         </TableHead>
         <TableBody>
           {(rowsPerPage > 0
-            ? communityRowsData.slice(
+            ? tableHeaderData.slice(
                 page * rowsPerPage,
                 page * rowsPerPage + rowsPerPage
               )
-            : communityRowsData
+            : data
           ).map((row) => {
             forecastedSum += row.forecasted
             projectedSum += row.projected
@@ -181,7 +198,7 @@ export default function CommunityList() {
       <TablePagination
         rowsPerPageOptions={[10, 25, 100, { value: -1, label: 'All' }]}
         component="div"
-        count={communityRowsData.length}
+        count={tableHeaderData.length}
         rowsPerPage={rowsPerPage}
         page={page}
         onPageChange={handleChangePage}
@@ -190,3 +207,5 @@ export default function CommunityList() {
     </React.Fragment>
   )
 }
+
+export default CommunityList
