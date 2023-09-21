@@ -373,7 +373,7 @@ export default function Dashboard() {
                       'data-testid': 'search-text-field',
                     }}
                     style={{
-                      width: '30%',
+                      width: '20%',
                     }}
                     onChange={handleSearchTextChange}
                   />
