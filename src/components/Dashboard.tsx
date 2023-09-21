@@ -26,10 +26,10 @@ import { Navbar } from './Navbar'
 import { Drawer } from './Drawer'
 import ButtonGroup from '@mui/material/ButtonGroup'
 import Button from '@mui/material/Button'
-import FormControl from '@mui/material/FormControl'
+// import FormControl from '@mui/material/FormControl'
 // import InputLabel from '@mui/material/InputLabel'
 import InputAdornment from '@mui/material/InputAdornment'
-import FilledInput from '@mui/material/FilledInput'
+// import FilledInput from '@mui/material/FilledInput'
 import SearchIcon from '@mui/icons-material/Search'
 import { Avatar, InputLabel, OutlinedInput, TextField } from '@mui/material'
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight'
@@ -115,8 +115,8 @@ export default function Dashboard() {
     if (!searchValue.length) {
       setAllCommunities(allCommunitiesCache.current)
     }
-    console.log(allCommunitiesCache)
-    console.log(searchValue)
+    // console.log(allCommunitiesCache)
+    // console.log(searchValue)
     applySearch(searchValue)
   }
 

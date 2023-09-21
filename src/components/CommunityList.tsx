@@ -1,4 +1,5 @@
 import * as React from 'react'
+import { useState } from 'react'
 // import Link from '@mui/material/Link'
 import Table from '@mui/material/Table'
 import TableBody from '@mui/material/TableBody'
@@ -9,7 +10,7 @@ import TableRow from '@mui/material/TableRow'
 import { tableHeaderData } from '../data'
 import { TablePagination } from '@mui/material'
 // import { Label } from '@mui/icons-material'
-import { ICommunities } from './Dashboard'
+// import { ICommunities } from './Dashboard'
 
 // function preventDefault(event: React.MouseEvent) {
 //   event.preventDefault()
@@ -40,8 +41,8 @@ const CommunityList: React.FC<dataProps> = ({ data }) => {
   let sopSum: number = 0
   let trenchedSum: number = 0
 
-  const [page, setPage] = React.useState(0)
-  const [rowsPerPage, setRowsPerPage] = React.useState(10)
+  const [page, setPage] = useState(0)
+  const [rowsPerPage, setRowsPerPage] = useState<number>(10)
 
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage)
@@ -77,7 +78,10 @@ const CommunityList: React.FC<dataProps> = ({ data }) => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {data.map((row) => {
+          {(rowsPerPage > 0
+            ? data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+            : data
+          ).map((row) => {
             forecastedSum += row.forecasted
             projectedSum += row.projected
             totalHomesitesSum += row.totalHomesites
@@ -192,7 +196,7 @@ const CommunityList: React.FC<dataProps> = ({ data }) => {
       <TablePagination
         rowsPerPageOptions={[10, 25, 100, { value: -1, label: 'All' }]}
         component="div"
-        count={tableHeaderData.length}
+        count={data.length}
         rowsPerPage={rowsPerPage}
         page={page}
         onPageChange={handleChangePage}
