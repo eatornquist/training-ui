@@ -7,7 +7,7 @@ import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 // import Title from './Title'
 import { tableHeaderData } from '../data'
-import { TableFooter, TablePagination } from '@mui/material'
+import { TablePagination } from '@mui/material'
 // import { Label } from '@mui/icons-material'
 import { ICommunities } from './Dashboard'
 
@@ -15,7 +15,7 @@ import { ICommunities } from './Dashboard'
 //   event.preventDefault()
 // }
 
-export interface dataProps {
+interface dataProps {
   data: {
     id: number
     community: string

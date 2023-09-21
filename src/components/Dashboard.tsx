@@ -115,30 +115,32 @@ export default function Dashboard() {
     if (!searchValue.length) {
       setAllCommunities(allCommunitiesCache.current)
     }
+    console.log(allCommunitiesCache)
     console.log(searchValue)
     applySearch(searchValue)
   }
 
-  useEffect(() => {
-    setAllCommunities([
-      {
-        id: 7669,
-        community: 'Deerhaven SFR',
-        forecasted: 35,
-        projected: 0,
-        totalHomesites: 208,
-        paneled: 0,
-        permitted: 2,
-        sop: 208,
-        trenched: 208,
-        communityStatus: 'active',
-      },
-    ])
-  }, [])
-
   // useEffect(() => {
-  //   setAllCommunities(communityRowsData)
+  //   setAllCommunities([
+  //     {
+  //       id: 7669,
+  //       community: 'Deerhaven SFR',
+  //       forecasted: 35,
+  //       projected: 0,
+  //       totalHomesites: 208,
+  //       paneled: 0,
+  //       permitted: 2,
+  //       sop: 208,
+  //       trenched: 208,
+  //       communityStatus: 'active',
+  //     },
+  //   ])
   // }, [])
+
+  useEffect(() => {
+    setAllCommunities(communityRowsData)
+    allCommunitiesCache.current = communityRowsData
+  }, [])
 
   return (
     <ThemeProvider theme={defaultTheme}>
