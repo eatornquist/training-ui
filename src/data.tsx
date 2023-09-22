@@ -30,8 +30,19 @@ function createData(
 export const communityRowsData = [
   createData(7695, 'Aspen Groove', 0, 35, 45, 0, 2, 0, 0, 'Active'),
   createData(26176, 'Azalea Village SFR', 35, 0, 208, 0, 2, 208, 208, 'Active'),
-  createData(26187, 'Candleberry Place', 35, 0, 208, 0, 2, 208, 208, 'Active'),
-  createData(7601, 'Cedar Grove', 35, 0, 208, 0, 2, 208, 208, 'Active'),
+  createData(
+    26187,
+    'Candleberry Place',
+    35,
+    0,
+    208,
+    0,
+    2,
+    208,
+    208,
+    'Completed'
+  ),
+  createData(7601, 'Cedar Grove', 35, 0, 208, 0, 2, 208, 208, 'Completed'),
   createData(
     68809,
     'Dartmoor At Mountian Crest',
@@ -42,12 +53,23 @@ export const communityRowsData = [
     2,
     0,
     0,
-    'Active'
+    'Completed'
   ),
-  createData(7669, 'Deerhaven SFR', 35, 0, 208, 0, 2, 208, 208, 'Active'),
-  createData(26174, 'Envoy at Ponce TH', 35, 0, 208, 0, 2, 208, 208, 'Active'),
-  createData(26152, 'Erkside Road', 35, 0, 208, 5, 2, 208, 208, 'Active'),
-  createData(26132, 'Fernhust', 0, 35, 45, 0, 2, 0, 0, 'Active'),
+  createData(7669, 'Deerhaven SFR', 35, 0, 208, 0, 2, 208, 208, 'Archived'),
+  createData(
+    26174,
+    'Envoy at Ponce TH',
+    35,
+    0,
+    208,
+    0,
+    2,
+    208,
+    208,
+    'Archived'
+  ),
+  createData(26152, 'Erkside Road', 35, 0, 208, 5, 2, 208, 208, 'Archived'),
+  createData(26132, 'Fernhust', 0, 35, 45, 0, 2, 0, 0, 'Archived'),
   createData(
     26193,
     'Gainsville Township',
@@ -58,10 +80,12 @@ export const communityRowsData = [
     2,
     208,
     208,
-    'Active'
+    'Archived'
   ),
   createData(7649, 'Haddonstone II', 35, 0, 208, 0, 2, 208, 208, 'Active'),
   createData(26179, 'Hawkings Manor', 35, 0, 208, 0, 2, 208, 208, 'Active'),
+  createData(261325, 'Fernhust II', 0, 40, 45, 0, 2, 24, 0, 'Archived'),
+  createData(261793, 'Hawkings Major', 35, 0, 298, 0, 2, 208, 207, 'Active'),
 ]
 
 export const tableHeaderData = [

@@ -146,8 +146,15 @@ export default function Dashboard() {
   }, [])
 
   const handleClick = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-    console.log(event.currentTarget.className)
-    setSelectedTab(event.currentTarget.className)
+    let target = event.currentTarget.className
+    setSelectedTab(target)
+    let filteredData = allCommunitiesCache.current.filter(function (el) {
+      if (target === 'All') {
+        return allCommunitiesCache
+      }
+      return el.communityStatus === target
+    })
+    setAllCommunities(filteredData)
   }
 
   return (
@@ -401,7 +408,7 @@ export default function Dashboard() {
                               selectedTab === 'Archived'
                                 ? '2px solid #005DAA'
                                 : '',
-                            padding: '1em 10em',
+                            padding: '1em 11em',
                             fontWeight: 'bold',
                           }}
                         >
