@@ -190,9 +190,6 @@ const CommunityList: React.FC<dataProps> = ({ data }) => {
           </TableRow>
         </TableBody>
       </Table>
-      {/* <Link color="primary" href="#" onClick={preventDefault} sx={{ mt: 3 }}>
-        Total
-      </Link> */}
       <TablePagination
         rowsPerPageOptions={[10, 25, 100, { value: -1, label: 'All' }]}
         component="div"

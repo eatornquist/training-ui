@@ -38,6 +38,7 @@ import DownloadIcon from '@mui/icons-material/Download'
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
 import { debounce } from 'lodash'
 import { communityRowsData } from '../data'
+import DataTable from './testSorting'
 
 function Copyright(props: any) {
   return (
@@ -97,6 +98,8 @@ export default function Dashboard() {
   const [communities, setAllCommunities] = useState<ICommunities[]>([])
   const allCommunitiesCache = useRef<ICommunities[]>([])
 
+  const [selectedTab, setSelectedTab] = useState<string>('All')
+
   const applySearch = debounce(
     (val: string) =>
       setAllCommunities(
@@ -141,6 +144,11 @@ export default function Dashboard() {
     setAllCommunities(communityRowsData)
     allCommunitiesCache.current = communityRowsData
   }, [])
+
+  const handleClick = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    console.log(event.currentTarget.className)
+    setSelectedTab(event.currentTarget.className)
+  }
 
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -320,7 +328,89 @@ export default function Dashboard() {
                     flexDirection: 'column',
                   }}
                 >
-                  <Divider sx={{ my: 1 }} />
+                  <Box sx={{ pb: '2rem' }}>
+                    <div style={{ paddingTop: '1px', marginTop: '-15px' }}>
+                      <div
+                        style={{
+                          display: 'flex',
+                          borderBottom: '1px solid',
+                          borderBottomColor: 'lightgray',
+                        }}
+                      >
+                        <div
+                          className="All"
+                          onClick={handleClick}
+                          style={{
+                            color:
+                              selectedTab === 'All' ? '#005DAA' : '#1C2B36',
+                            whiteSpace: 'nowrap',
+                            borderBottom:
+                              selectedTab === 'All' ? '2px solid #005DAA' : '',
+                            padding: '1em 11em',
+                            fontWeight: 'bold',
+                          }}
+                        >
+                          All
+                        </div>
+                        <div
+                          className="Active"
+                          onClick={handleClick}
+                          style={{
+                            color:
+                              selectedTab === 'Active' ? '#005DAA' : '#1C2B36',
+                            whiteSpace: 'nowrap',
+                            borderBottom:
+                              selectedTab === 'Active'
+                                ? '2px solid #005DAA'
+                                : '',
+                            padding: '1em 11em',
+                            fontWeight: 'bold',
+                          }}
+                        >
+                          Active
+                        </div>
+                        <div
+                          className="Completed"
+                          onClick={handleClick}
+                          style={{
+                            color:
+                              selectedTab === 'Completed'
+                                ? '#005DAA'
+                                : '#1C2B36',
+                            whiteSpace: 'nowrap',
+                            borderBottom:
+                              selectedTab === 'Completed'
+                                ? '2px solid #005DAA'
+                                : '',
+                            padding: '1em 15em',
+                            fontWeight: 'bold',
+                          }}
+                        >
+                          Completed
+                        </div>
+                        <div
+                          className="Archived"
+                          onClick={handleClick}
+                          style={{
+                            color:
+                              selectedTab === 'Archived'
+                                ? '#005DAA'
+                                : '#1C2B36',
+                            whiteSpace: 'nowrap',
+                            borderBottom:
+                              selectedTab === 'Archived'
+                                ? '2px solid #005DAA'
+                                : '',
+                            padding: '1em 10em',
+                            fontWeight: 'bold',
+                          }}
+                        >
+                          Archived
+                        </div>
+                      </div>
+                    </div>
+                  </Box>
+                  {/* <Divider sx={{ my: 1 }} /> */}
                   {/* <FormControl
                     fullWidth
                     variant="filled"
@@ -405,6 +495,7 @@ export default function Dashboard() {
                     />
                   </div>
                   <CommunityList data={communities} />
+                  {/* <DataTable /> */}
                 </Paper>
               </Grid>
             </Grid>
