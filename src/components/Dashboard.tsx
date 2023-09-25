@@ -39,6 +39,8 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
 import { debounce } from 'lodash'
 import { communityRowsData } from '../data'
 import DataTable from './testSorting'
+import FormatDialog from './FormatDialog'
+import { firstOptions } from './FormatDialog'
 
 function Copyright(props: any) {
   return (
@@ -102,6 +104,10 @@ export default function Dashboard() {
 
   const filteredData = useRef<ICommunities[]>([])
 
+  const [dialogOpen, setDialogOpen] = useState(false)
+
+  const [selectedValue, setSelectedValue] = useState(firstOptions[1])
+
   const applySearch = debounce(
     (val: string) =>
       setAllCommunities(
@@ -143,22 +149,14 @@ export default function Dashboard() {
     setAllCommunities(filteredData.current)
   }
 
-  // useEffect(() => {
-  //   setAllCommunities([
-  //     {
-  //       id: 7669,
-  //       community: 'Deerhaven SFR',
-  //       forecasted: 35,
-  //       projected: 0,
-  //       totalHomesites: 208,
-  //       paneled: 0,
-  //       permitted: 2,
-  //       sop: 208,
-  //       trenched: 208,
-  //       communityStatus: 'active',
-  //     },
-  //   ])
-  // }, [])
+  const handleClickOpen = () => {
+    setDialogOpen(true)
+  }
+
+  const handleClose = (value: string) => {
+    setDialogOpen(false)
+    setSelectedValue(value)
+  }
 
   useEffect(() => {
     setAllCommunities(communityRowsData)
@@ -503,10 +501,22 @@ export default function Dashboard() {
                       FY 2023
                       <KeyboardArrowRightIcon sx={{ width: 15 }} />
                     </Button>
-                    <DownloadIcon color="secondary" sx={{ ml: 3, mb: -1 }} />
-                    <KeyboardArrowDownIcon //small window to select format
-                      color="secondary"
-                      sx={{ mb: -0.8 }}
+                    <IconButton size="small" sx={{ ml: 1 }}>
+                      <DownloadIcon color="secondary" />
+                    </IconButton>
+                    <IconButton
+                      size="small"
+                      sx={{ ml: -1 }}
+                      onClick={handleClickOpen}
+                    >
+                      <KeyboardArrowDownIcon //small window to select format (Dialog component)
+                        color="secondary"
+                      />
+                    </IconButton>
+                    <FormatDialog
+                      selectedValue={selectedValue}
+                      open={dialogOpen}
+                      onClose={handleClose}
                     />
                   </div>
                   <CommunityList data={communities} />
