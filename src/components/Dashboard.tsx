@@ -100,10 +100,15 @@ export default function Dashboard() {
 
   const [selectedTab, setSelectedTab] = useState<string>('All')
 
+  const filteredData = useRef<ICommunities[]>([])
+
   const applySearch = debounce(
     (val: string) =>
       setAllCommunities(
-        allCommunitiesCache.current.filter((el) =>
+        (filteredData.current.length === 0
+          ? allCommunitiesCache.current
+          : filteredData.current
+        ).filter((el) =>
           el.community.toLocaleLowerCase().includes(val.toLocaleLowerCase())
         )
       ),
@@ -115,12 +120,27 @@ export default function Dashboard() {
   ) => {
     const searchValue = evt.target.value
     applySearch.cancel()
+    console.log(filteredData)
     if (!searchValue.length) {
-      setAllCommunities(allCommunitiesCache.current)
+      setAllCommunities(
+        filteredData.current.length === 0
+          ? allCommunitiesCache.current
+          : filteredData.current
+      )
     }
-    // console.log(allCommunitiesCache)
-    // console.log(searchValue)
     applySearch(searchValue)
+  }
+
+  const handleClick = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    let target = event.currentTarget.className
+    setSelectedTab(target)
+    filteredData.current = allCommunitiesCache.current.filter(function (el) {
+      if (target === 'All') {
+        return allCommunitiesCache
+      }
+      return el.communityStatus === target
+    })
+    setAllCommunities(filteredData.current)
   }
 
   // useEffect(() => {
@@ -144,18 +164,6 @@ export default function Dashboard() {
     setAllCommunities(communityRowsData)
     allCommunitiesCache.current = communityRowsData
   }, [])
-
-  const handleClick = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-    let target = event.currentTarget.className
-    setSelectedTab(target)
-    let filteredData = allCommunitiesCache.current.filter(function (el) {
-      if (target === 'All') {
-        return allCommunitiesCache
-      }
-      return el.communityStatus === target
-    })
-    setAllCommunities(filteredData)
-  }
 
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -496,7 +504,7 @@ export default function Dashboard() {
                       <KeyboardArrowRightIcon sx={{ width: 15 }} />
                     </Button>
                     <DownloadIcon color="secondary" sx={{ ml: 3, mb: -1 }} />
-                    <KeyboardArrowDownIcon
+                    <KeyboardArrowDownIcon //small window to select format
                       color="secondary"
                       sx={{ mb: -0.8 }}
                     />
