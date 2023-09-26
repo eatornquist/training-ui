@@ -121,6 +121,10 @@ export default function Dashboard() {
 
   const [selectedValue, setSelectedValue] = useState(firstOptions[1])
 
+  const [selectedFormat, setSelectedFormat] = useState<'csv' | 'xlsx' | string>(
+    'csv'
+  )
+
   const applySearch = debounce(
     (val: string) =>
       setAllCommunities(
@@ -166,9 +170,14 @@ export default function Dashboard() {
     setDialogOpen(true)
   }
 
-  const handleClose = () => {
+  const handleClose = (value: 'csv' | 'xlsx' | string) => {
     setDialogOpen(false)
-    // setSelectedValue(value)
+    setSelectedFormat(value)
+  }
+
+  const handleCloseSecond = (value: 'csv' | 'xlsx' | string) => {
+    setSecondDialogOpen(false)
+    setSelectedFormat(value)
   }
 
   //Download functionality start:
@@ -178,33 +187,19 @@ export default function Dashboard() {
   const docOpen = Boolean(anchorEl)
   // const { create, remove } = useSnackBarContext()
 
-  const handleCloseSecond = () => {
-    setSecondDialogOpen(false)
-    // setSelectedValue(value)
-  }
-
   const handleDocumentClose = () => {
     setAnchorEl(null)
   }
 
-  const handleDownload = async (downloadType: 'csv' | 'xlsx') => {
+  const handleFormatSelect = (value: 'csv' | 'xlsx' | string) => {
+    handleCloseSecond(value)
+    handleClose(value)
+  }
+
+  const handleDownload = async (downloadType: 'csv' | 'xlsx' | string) => {
     try {
-      if (!communities) return
-      const mappedCalcControlsAndId = {
-        // 'Forecast Name': id,
-        // [calcControlDisplayValues.usage]: calcControls.usage,
-        // [calcControlDisplayValues.forecastIncreaseOrDecrease]:
-        //   calcControls.forecastIncreaseOrDecrease,
-        // [calcControlDisplayValues.allocationCoverage]:
-        //   calcControls.allocationCoverage,
-        // [calcControlDisplayValues.minDaysOfInventory]:
-        //   calcControls.minDaysOfInventory,
-      }
+      console.log(downloadType)
       const body = communities.map((row, index) => {
-        // const history: Record<string, number | undefined> = {}
-        // row.salesHistory.forEach((el) => {
-        //   history[el.month] = el.quantity
-        // })
         const exportedRow = {
           Community: row.community,
           'Community Id': row.id,
@@ -216,9 +211,7 @@ export default function Dashboard() {
           SOP: row.sop,
           Trenched: row.trenched,
         }
-        return index === 0
-          ? { ...mappedCalcControlsAndId, ...exportedRow }
-          : exportedRow
+        return exportedRow
       })
       let blob
       if (downloadType === 'xlsx') {
@@ -271,9 +264,6 @@ export default function Dashboard() {
         // })
       }
     }
-
-    handleCloseSecond()
-    handleClose()
   }
   //Download functionality end:
 
@@ -542,43 +532,6 @@ export default function Dashboard() {
                       </div>
                     </div>
                   </Box>
-                  {/* <Divider sx={{ my: 1 }} /> */}
-                  {/* <FormControl
-                    fullWidth
-                    variant="filled"
-                    size="small"
-                    sx={{ m: 1, width: '40ch', mb: 2 }}
-                  >
-                    <FilledInput
-                      sx={{ height: '4ch' }}
-                      id="filled-adornment-amount"
-                      startAdornment={
-                        <InputAdornment position="start" sx={{ mb: 1.5 }}>
-                          <SearchIcon />
-                        </InputAdornment>
-                      }
-                    />
-                  </FormControl> */}
-
-                  {/* <FormControl
-                    sx={{ m: 1, width: '40ch' }}
-                    variant="filled"
-                    size="small"
-                  >
-                    <InputLabel htmlFor="">
-                      🔍 Search for community or homesite
-                    </InputLabel>
-                    <FilledInput
-                      id="filled-adornment-password"
-                      type={'text'}
-                      // startAdornment={
-                      //   <InputAdornment position="start">
-                      //     <SearchIcon />
-                      //   </InputAdornment>
-                      // }
-                    />
-                  </FormControl> */}
-
                   <TextField
                     id="input-with-icon-adornment"
                     variant="filled"
@@ -620,7 +573,11 @@ export default function Dashboard() {
                       FY 2023
                       <KeyboardArrowRightIcon sx={{ width: 15 }} />
                     </Button>
-                    <IconButton size="small" sx={{ ml: 1 }}>
+                    <IconButton
+                      size="small"
+                      sx={{ ml: 1 }}
+                      onClick={() => handleDownload(selectedFormat)}
+                    >
                       <DownloadIcon color="secondary" />
                     </IconButton>
                     <IconButton
@@ -636,7 +593,7 @@ export default function Dashboard() {
                       selectedValue={selectedValue}
                       open={dialogOpen}
                       onClose={handleClose}
-                      onDownload={handleDownload}
+                      onFormatSelect={handleFormatSelect}
                       secondDialogOpen={secondDialogOpen}
                       onCloseSecond={handleCloseSecond}
                       setSecondDialogOpen={setSecondDialogOpen}

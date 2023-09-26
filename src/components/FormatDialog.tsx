@@ -22,8 +22,8 @@ export const thirdOptions = ['csv', 'xlsx']
 export interface SimpleDialogProps {
   open: boolean
   selectedValue: string
-  onClose: (value: string) => void
-  onDownload: (downloadType: 'csv' | 'xlsx') => void
+  onClose: (value: 'csv' | 'xlsx' | string) => void
+  onFormatSelect: (value: 'csv' | 'xlsx' | string) => void
   secondDialogOpen: boolean
   onCloseSecond: (value: string) => void
   setSecondDialogOpen: (value: boolean) => void
@@ -32,7 +32,7 @@ export interface SimpleDialogProps {
 export default function FormatDialog(props: SimpleDialogProps) {
   const {
     onClose,
-    onDownload,
+    onFormatSelect,
     selectedValue,
     open,
     secondDialogOpen,
@@ -89,12 +89,12 @@ export default function FormatDialog(props: SimpleDialogProps) {
       >
         <List sx={{ pt: 0 }}>
           <ListItem disableGutters sx={{ width: 100, height: 50 }}>
-            <ListItemButton autoFocus onClick={() => onDownload('csv')}>
+            <ListItemButton autoFocus onClick={() => onFormatSelect('csv')}>
               <ListItemText primary="csv" />
             </ListItemButton>
           </ListItem>
           <ListItem disableGutters sx={{ width: 100, height: 50 }}>
-            <ListItemButton autoFocus onClick={() => onDownload('xlsx')}>
+            <ListItemButton autoFocus onClick={() => onFormatSelect('xlsx')}>
               <ListItemText primary="xlsx" />
             </ListItemButton>
           </ListItem>
