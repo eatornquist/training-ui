@@ -53,7 +53,7 @@ import { useParams } from 'react-router-dom'
 import { unparse } from 'papaparse'
 import { appInsights } from '../lib/appInsights'
 // import { useSnackBarContext } from '../context/SnackBar'
-import { theme } from '../themes/theme'
+// import { theme } from '../themes/theme'
 
 function Copyright(props: any) {
   return (
@@ -73,23 +73,23 @@ function Copyright(props: any) {
   )
 }
 
-// const defaultTheme = createTheme({
-//   palette: {
-//     primary: {
-//       main: '#003c77',
-//     },
-//     secondary: {
-//       main: '#1f75bb',
-//     },
-//     warning: {
-//       main: '#CC0B08',
-//     },
-//   },
-//   // typography: {
-//   //   fontFamily: ['Hoefler text', 'Arial'].join(','),
-//   //   fontSize: 15,
-//   // },
-// })
+const defaultTheme = createTheme({
+  palette: {
+    primary: {
+      main: '#003c77',
+    },
+    secondary: {
+      main: '#1f75bb',
+    },
+    warning: {
+      main: '#CC0B08',
+    },
+  },
+  // typography: {
+  //   fontFamily: ['Hoefler text', 'Arial'].join(','),
+  //   fontSize: 15,
+  // },
+})
 
 export type ICommunities = {
   id: number
@@ -283,7 +283,7 @@ export default function Dashboard() {
   }, [])
 
   return (
-    <ThemeProvider theme={theme}>
+    <ThemeProvider theme={defaultTheme}>
       <Box sx={{ display: 'flex' }}>
         <CssBaseline />
         <Navbar position="absolute" open={open} color="primary">
