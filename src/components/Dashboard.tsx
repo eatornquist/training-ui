@@ -1,5 +1,12 @@
 import * as React from 'react'
-import { useState, useRef, useEffect } from 'react'
+import {
+  useState,
+  useRef,
+  useEffect,
+  // createContext,
+  // useContext,
+  // ReactNode,
+} from 'react'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
 import CssBaseline from '@mui/material/CssBaseline'
 import Box from '@mui/material/Box'
@@ -31,16 +38,22 @@ import Button from '@mui/material/Button'
 import InputAdornment from '@mui/material/InputAdornment'
 // import FilledInput from '@mui/material/FilledInput'
 import SearchIcon from '@mui/icons-material/Search'
-import { Avatar, InputLabel, OutlinedInput, TextField } from '@mui/material'
+import { Avatar, TextField } from '@mui/material'
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight'
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft'
 import DownloadIcon from '@mui/icons-material/Download'
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
 import { debounce } from 'lodash'
 import { communityRowsData } from '../data'
-import DataTable from './testSorting'
+// import DataTable from './testSorting'
 import FormatDialog from './FormatDialog'
 import { firstOptions } from './FormatDialog'
+import * as XLSX from 'xlsx'
+import { useParams } from 'react-router-dom'
+import { unparse } from 'papaparse'
+import { appInsights } from '../lib/appInsights'
+// import { useSnackBarContext } from '../context/SnackBar'
+import { theme } from '../themes/theme'
 
 function Copyright(props: any) {
   return (
@@ -60,23 +73,23 @@ function Copyright(props: any) {
   )
 }
 
-const defaultTheme = createTheme({
-  palette: {
-    primary: {
-      main: '#003c77',
-    },
-    secondary: {
-      main: '#1f75bb',
-    },
-    warning: {
-      main: '#CC0B08',
-    },
-  },
-  // typography: {
-  //   fontFamily: ['Hoefler text', 'Arial'].join(','),
-  //   fontSize: 15,
-  // },
-})
+// const defaultTheme = createTheme({
+//   palette: {
+//     primary: {
+//       main: '#003c77',
+//     },
+//     secondary: {
+//       main: '#1f75bb',
+//     },
+//     warning: {
+//       main: '#CC0B08',
+//     },
+//   },
+//   // typography: {
+//   //   fontFamily: ['Hoefler text', 'Arial'].join(','),
+//   //   fontSize: 15,
+//   // },
+// })
 
 export type ICommunities = {
   id: number
@@ -153,10 +166,116 @@ export default function Dashboard() {
     setDialogOpen(true)
   }
 
-  const handleClose = (value: string) => {
+  const handleClose = () => {
     setDialogOpen(false)
-    setSelectedValue(value)
+    // setSelectedValue(value)
   }
+
+  //Download functionality start:
+  const [secondDialogOpen, setSecondDialogOpen] = useState(false)
+  const { id } = useParams<{ id: string }>()
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
+  const docOpen = Boolean(anchorEl)
+  // const { create, remove } = useSnackBarContext()
+
+  const handleCloseSecond = () => {
+    setSecondDialogOpen(false)
+    // setSelectedValue(value)
+  }
+
+  const handleDocumentClose = () => {
+    setAnchorEl(null)
+  }
+
+  const handleDownload = async (downloadType: 'csv' | 'xlsx') => {
+    try {
+      if (!communities) return
+      const mappedCalcControlsAndId = {
+        // 'Forecast Name': id,
+        // [calcControlDisplayValues.usage]: calcControls.usage,
+        // [calcControlDisplayValues.forecastIncreaseOrDecrease]:
+        //   calcControls.forecastIncreaseOrDecrease,
+        // [calcControlDisplayValues.allocationCoverage]:
+        //   calcControls.allocationCoverage,
+        // [calcControlDisplayValues.minDaysOfInventory]:
+        //   calcControls.minDaysOfInventory,
+      }
+      const body = communities.map((row, index) => {
+        // const history: Record<string, number | undefined> = {}
+        // row.salesHistory.forEach((el) => {
+        //   history[el.month] = el.quantity
+        // })
+        const exportedRow = {
+          Community: row.community,
+          'Community Id': row.id,
+          Forecasted: row.forecasted,
+          Projected: row.projected,
+          'Total Homesites': row.totalHomesites,
+          Paneled: row.paneled,
+          Permitted: row.permitted,
+          SOP: row.sop,
+          Trenched: row.trenched,
+        }
+        return index === 0
+          ? { ...mappedCalcControlsAndId, ...exportedRow }
+          : exportedRow
+      })
+      let blob
+      if (downloadType === 'xlsx') {
+        const workbook = XLSX.utils.book_new()
+        const worksheet = XLSX.utils.json_to_sheet([...body])
+        // excel sheet name cannot be longer than 30 characters, : is an invalid character so we remove it
+        const sheetName = id!.replace(/:/g, '').substring(0, 30)
+        XLSX.utils.book_append_sheet(workbook, worksheet, sheetName)
+        blob = XLSX.write(workbook, {
+          type: 'buffer',
+          bookType: 'xlsx',
+        })
+      } else {
+        blob = unparse([...body])
+      }
+
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const filePicker = await (window as any).showSaveFilePicker({
+        suggestedName: `${id}.${downloadType}`,
+        types: [
+          {
+            description: 'Excel File',
+            accept: {
+              'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
+                ['.xlsx'],
+            },
+          },
+          {
+            description: 'CSV File',
+            accept: {
+              'text/csv': ['.csv'],
+            },
+          },
+        ],
+      })
+
+      const writableStream = await filePicker.createWritable()
+      await writableStream.write(blob)
+      await writableStream.close()
+
+      handleDocumentClose()
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error: any) {
+      if (!error?.message?.includes(401)) {
+        appInsights.trackTrace({
+          message: `handleDownload Error: ${error}`,
+        })
+        // create('Forecast export canceled.', {
+        //   severity: 'warning',
+        // })
+      }
+    }
+
+    handleCloseSecond()
+    handleClose()
+  }
+  //Download functionality end:
 
   useEffect(() => {
     setAllCommunities(communityRowsData)
@@ -164,7 +283,7 @@ export default function Dashboard() {
   }, [])
 
   return (
-    <ThemeProvider theme={defaultTheme}>
+    <ThemeProvider theme={theme}>
       <Box sx={{ display: 'flex' }}>
         <CssBaseline />
         <Navbar position="absolute" open={open} color="primary">
@@ -517,6 +636,10 @@ export default function Dashboard() {
                       selectedValue={selectedValue}
                       open={dialogOpen}
                       onClose={handleClose}
+                      onDownload={handleDownload}
+                      secondDialogOpen={secondDialogOpen}
+                      onCloseSecond={handleCloseSecond}
+                      setSecondDialogOpen={setSecondDialogOpen}
                     />
                   </div>
                   <CommunityList data={communities} />

@@ -17,26 +17,31 @@ export const firstOptions = [
 
 export const secondOptions = ['Complete', 'Archive']
 
-export const thirdOptions = ['Csv', 'Pdf', 'Xlsx']
+export const thirdOptions = ['csv', 'xlsx']
 
 export interface SimpleDialogProps {
   open: boolean
   selectedValue: string
   onClose: (value: string) => void
+  onDownload: (downloadType: 'csv' | 'xlsx') => void
+  secondDialogOpen: boolean
+  onCloseSecond: (value: string) => void
+  setSecondDialogOpen: (value: boolean) => void
 }
 
 export default function FormatDialog(props: SimpleDialogProps) {
-  const { onClose, selectedValue, open } = props
-
-  const [secondDialogOpen, setSecondDialogOpen] = useState(false)
+  const {
+    onClose,
+    onDownload,
+    selectedValue,
+    open,
+    secondDialogOpen,
+    onCloseSecond,
+    setSecondDialogOpen,
+  } = props
 
   const handleClose = () => {
     onClose(selectedValue)
-  }
-
-  const handleCloseSecond = (value: string) => {
-    setSecondDialogOpen(false)
-    // setSelectedValue(value)
   }
 
   const handleListItemClick = (value: string) => {
@@ -45,10 +50,6 @@ export default function FormatDialog(props: SimpleDialogProps) {
     } else {
       onClose(value)
     }
-  }
-
-  const handleSecondListItemClick = (value: string) => {
-    handleCloseSecond(value)
   }
 
   return (
@@ -74,7 +75,7 @@ export default function FormatDialog(props: SimpleDialogProps) {
           <Divider sx={{ my: 1 }} />
           {secondOptions.map((option) => (
             <ListItem disableGutters>
-              <ListItemButton onClick={() => handleListItemClick('option')}>
+              <ListItemButton onClick={() => handleListItemClick(option)}>
                 <ListItemText primary={option} />
               </ListItemButton>
             </ListItem>
@@ -82,21 +83,21 @@ export default function FormatDialog(props: SimpleDialogProps) {
         </List>
       </Dialog>
       <Dialog
-        onClose={handleCloseSecond}
+        onClose={onCloseSecond}
         open={secondDialogOpen}
         sx={{ display: 'flex', justifyContent: 'right', mt: 18, mr: 2 }}
       >
         <List sx={{ pt: 0 }}>
-          {thirdOptions.map((option) => (
-            <ListItem disableGutters sx={{ width: 100, height: 50 }}>
-              <ListItemButton
-                autoFocus
-                onClick={() => handleSecondListItemClick('option')}
-              >
-                <ListItemText primary={option} />
-              </ListItemButton>
-            </ListItem>
-          ))}
+          <ListItem disableGutters sx={{ width: 100, height: 50 }}>
+            <ListItemButton autoFocus onClick={() => onDownload('csv')}>
+              <ListItemText primary="csv" />
+            </ListItemButton>
+          </ListItem>
+          <ListItem disableGutters sx={{ width: 100, height: 50 }}>
+            <ListItemButton autoFocus onClick={() => onDownload('xlsx')}>
+              <ListItemText primary="xlsx" />
+            </ListItemButton>
+          </ListItem>
         </List>
       </Dialog>
     </>
