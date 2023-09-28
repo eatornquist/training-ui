@@ -198,7 +198,11 @@ export default function Dashboard() {
 
   const handleDownload = async (downloadType: 'csv' | 'xlsx' | string) => {
     try {
-      const body = communities.map((row, index) => {
+      const body = (
+        filteredData.current.length === 0
+          ? allCommunitiesCache.current
+          : filteredData.current
+      ).map((row, index) => {
         const exportedRow = {
           Community: row.community,
           'Community Id': row.id,
