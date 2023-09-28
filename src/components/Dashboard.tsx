@@ -569,12 +569,22 @@ export default function Dashboard() {
                       sx={{
                         width: 150,
                         fontWeight: 'bold',
-                        borderWidth: 3,
+                        // borderWidth: 3,
                       }}
                     >
-                      <KeyboardArrowLeftIcon sx={{ width: 15 }} />
+                      <IconButton size="small">
+                        <KeyboardArrowLeftIcon
+                          color="secondary"
+                          sx={{ width: 15 }}
+                        />
+                      </IconButton>
                       FY 2023
-                      <KeyboardArrowRightIcon sx={{ width: 15 }} />
+                      <IconButton size="small" sx={{}}>
+                        <KeyboardArrowRightIcon
+                          color="secondary"
+                          sx={{ width: 15 }}
+                        />
+                      </IconButton>
                     </Button>
                     <IconButton
                       size="small"
