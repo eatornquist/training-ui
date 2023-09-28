@@ -198,7 +198,6 @@ export default function Dashboard() {
 
   const handleDownload = async (downloadType: 'csv' | 'xlsx' | string) => {
     try {
-      console.log(downloadType)
       const body = communities.map((row, index) => {
         const exportedRow = {
           Community: row.community,
@@ -218,7 +217,7 @@ export default function Dashboard() {
         const workbook = XLSX.utils.book_new()
         const worksheet = XLSX.utils.json_to_sheet([...body])
         // excel sheet name cannot be longer than 30 characters, : is an invalid character so we remove it
-        const sheetName = id!.replace(/:/g, '').substring(0, 30)
+        const sheetName = id?.replace(/:/g, '').substring(0, 30)
         XLSX.utils.book_append_sheet(workbook, worksheet, sheetName)
         blob = XLSX.write(workbook, {
           type: 'buffer',
@@ -259,9 +258,9 @@ export default function Dashboard() {
         appInsights.trackTrace({
           message: `handleDownload Error: ${error}`,
         })
-        // create('Forecast export canceled.', {
-        //   severity: 'warning',
-        // })
+        console.log('Forecast export canceled.', {
+          severity: 'warning',
+        })
       }
     }
   }
