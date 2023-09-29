@@ -1,16 +1,17 @@
 import * as React from 'react'
-import { useState } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 // import Link from '@mui/material/Link'
 import Table from '@mui/material/Table'
 import TableBody from '@mui/material/TableBody'
 import TableCell from '@mui/material/TableCell'
-import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 // import Title from './Title'
-import { tableHeaderData } from '../data'
 import { TablePagination } from '@mui/material'
 // import { Label } from '@mui/icons-material'
 // import { ICommunities } from './Dashboard'
+import EnhancedTableHead from './EnhancedTableHead'
+import { Order } from './EnhancedTableHead'
+import { ICommunities } from './Dashboard'
 
 // function preventDefault(event: React.MouseEvent) {
 //   event.preventDefault()
@@ -18,7 +19,7 @@ import { TablePagination } from '@mui/material'
 
 interface dataProps {
   data: {
-    id: number
+    communityId: number
     community: string
     forecasted: number
     projected: number
@@ -30,6 +31,18 @@ interface dataProps {
     communityStatus: string
   }[]
 }
+// export interface Data {
+//   community: string
+//   communityId: number
+//   forecasted: number
+//   projected: number
+//   totalHomesites: number
+//   paneled: number
+//   permitted: number
+//   sop: number
+//   trenched: number
+//   communityStatus: string
+// }
 
 // export default function CommunityList(props: IRecentForecast) {
 const CommunityList: React.FC<dataProps> = ({ data }) => {
@@ -43,6 +56,8 @@ const CommunityList: React.FC<dataProps> = ({ data }) => {
 
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState<number>(10)
+  const [order, setOrder] = React.useState<Order>('asc')
+  const [orderBy, setOrderBy] = React.useState<keyof ICommunities>('community')
 
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage)
@@ -55,32 +70,94 @@ const CommunityList: React.FC<dataProps> = ({ data }) => {
     setPage(0)
   }
 
+  const handleRequestSort = (
+    event: React.MouseEvent<unknown>,
+    property: keyof ICommunities
+  ) => {
+    const isAsc = orderBy === property && order === 'asc'
+    setOrder(isAsc ? 'desc' : 'asc')
+    setOrderBy(property)
+  }
+
+  function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
+    if (b[orderBy] < a[orderBy]) {
+      return -1
+    }
+    if (b[orderBy] > a[orderBy]) {
+      return 1
+    }
+    return 0
+  }
+
+  function tableSort<T>(
+    array: readonly T[],
+    comparator: (a: T, b: T) => number
+  ) {
+    const stabilizedThis = array.map((el, index) => [el, index] as [T, number])
+    stabilizedThis.sort((a, b) => {
+      const order = comparator(a[0], b[0])
+      if (order !== 0) {
+        return order
+      }
+      return a[1] - b[1]
+    })
+    return stabilizedThis.map((el) => el[0])
+  }
+
+  function getComparator<Key extends keyof any>(
+    order: Order,
+    orderBy: Key
+  ): (
+    a: { [key in Key]: number | string },
+    b: { [key in Key]: number | string }
+  ) => number {
+    return order === 'desc'
+      ? (a, b) => descendingComparator(a, b, orderBy)
+      : (a, b) => -descendingComparator(a, b, orderBy)
+  }
+
+  const visibleRows = useMemo(
+    () =>
+      tableSort(data, getComparator(order, orderBy)).slice(
+        page * rowsPerPage,
+        page * rowsPerPage + rowsPerPage
+      ),
+    [order, orderBy, page, rowsPerPage]
+  )
+
+  // const [visibleRows, setVisibleRows] = React.useState(() =>
+  //   tableSort(data, getComparator(order, orderBy)).slice(
+  //     page * rowsPerPage,
+  //     page * rowsPerPage + rowsPerPage
+  //   )
+  // )
+
+  // useEffect(() => {
+  //   setVisibleRows(data)
+  // }, [])
+
+  // console.log(visibleRows)
+  // console.log(data)
+
   return (
     <React.Fragment>
-      {/* <Title>Recent Orders</Title> */}
       <Table style={{ width: 1750 }}>
-        <TableHead>
-          <TableRow style={{ background: '#dce3e8', fontWeight: 'bold' }}>
-            {tableHeaderData.map((data) => {
-              return (
-                <TableCell
-                  id={data.id.toString()}
-                  style={{
-                    border: '1px solid',
-                    borderColor: '#f4f6f9',
-                    fontWeight: 'bold',
-                  }}
-                >
-                  {data.header}
-                </TableCell>
-              )
-            })}
-          </TableRow>
-        </TableHead>
+        <EnhancedTableHead
+          order={order}
+          orderBy={orderBy}
+          onRequestSort={handleRequestSort}
+        />
         <TableBody>
           {(rowsPerPage > 0
-            ? data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-            : data
+            ? visibleRows.length === 0
+              ? data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+              : visibleRows.slice(
+                  page * rowsPerPage,
+                  page * rowsPerPage + rowsPerPage
+                )
+            : visibleRows.length === 0
+            ? data
+            : visibleRows
           ).map((row) => {
             forecastedSum += row.forecasted
             projectedSum += row.projected
@@ -90,7 +167,7 @@ const CommunityList: React.FC<dataProps> = ({ data }) => {
             sopSum += row.sop
             trenchedSum += row.trenched
             return (
-              <TableRow key={row.id}>
+              <TableRow key={row.communityId}>
                 <TableCell
                   style={{
                     border: '1px solid',
@@ -105,7 +182,7 @@ const CommunityList: React.FC<dataProps> = ({ data }) => {
                     borderColor: '#f4f6f9',
                   }}
                 >
-                  {row.id}
+                  {row.communityId}
                 </TableCell>
                 <TableCell
                   style={{

@@ -1,8 +1,10 @@
 // import { GridColDef, GridValueGetterParams } from '@mui/x-data-grid'
+import { ICommunities } from './components/Dashboard'
+// import { Data } from './components/EnhancedTableHead'
 
 // Generate Order Data
 function createData(
-  id: number,
+  communityId: number,
   community: string,
   forecasted: number,
   projected: number,
@@ -12,9 +14,9 @@ function createData(
   sop: number,
   trenched: number,
   communityStatus: string
-) {
+): ICommunities {
   return {
-    id,
+    communityId,
     community,
     forecasted,
     projected,
@@ -26,6 +28,22 @@ function createData(
     communityStatus,
   }
 }
+
+// function createData(
+//   name: string,
+//   calories: number,
+//   fat: number,
+//   carbs: number,
+//   protein: number
+// ): Data {
+//   return {
+//     name,
+//     calories,
+//     fat,
+//     carbs,
+//     protein,
+//   }
+// }
 
 export const communityRowsData = [
   createData(7695, 'Aspen Groove', 0, 35, 45, 0, 2, 0, 0, 'Active'),
@@ -88,48 +106,96 @@ export const communityRowsData = [
   createData(261793, 'Hawkings Major', 35, 0, 298, 0, 2, 208, 207, 'Active'),
 ]
 
-export const tableHeaderData = [
+interface HeadCell {
+  id: keyof ICommunities
+  label: string
+}
+
+export const headCells: readonly HeadCell[] = [
   {
-    id: 1,
-    header: 'Community',
+    id: 'community',
+    label: 'Community',
   },
   {
-    id: 2,
-    header: 'Community Id',
+    id: 'communityId',
+    label: 'Community Id',
   },
   {
-    id: 3,
-    header: 'Forecasted',
+    id: 'forecasted',
+    label: 'Forecasted',
   },
   {
-    id: 4,
-    header: 'Projected',
+    id: 'projected',
+    label: 'Projected',
   },
   {
-    id: 5,
-    header: 'Total Homesites',
+    id: 'totalHomesites',
+    label: 'Total Homesites',
   },
   {
-    id: 6,
-    header: 'Paneled',
+    id: 'paneled',
+    label: 'Paneled',
   },
   {
-    id: 7,
-    header: 'Permitted',
+    id: 'permitted',
+    label: 'Permitted',
   },
   {
-    id: 8,
-    header: 'SOP',
+    id: 'sop',
+    label: 'SOP',
   },
   {
-    id: 9,
-    header: 'Trenched',
+    id: 'trenched',
+    label: 'Trenched',
   },
   {
-    id: 10,
-    header: 'Action',
+    id: 'communityStatus',
+    label: 'Action',
   },
 ]
+
+// export const tableHeaderData = [
+//   {
+//     id: 1,
+//     header: 'Community',
+//   },
+//   {
+//     id: 2,
+//     header: 'Community Id',
+//   },
+//   {
+//     id: 3,
+//     header: 'Forecasted',
+//   },
+//   {
+//     id: 4,
+//     header: 'Projected',
+//   },
+//   {
+//     id: 5,
+//     header: 'Total Homesites',
+//   },
+//   {
+//     id: 6,
+//     header: 'Paneled',
+//   },
+//   {
+//     id: 7,
+//     header: 'Permitted',
+//   },
+//   {
+//     id: 8,
+//     header: 'SOP',
+//   },
+//   {
+//     id: 9,
+//     header: 'Trenched',
+//   },
+//   {
+//     id: 10,
+//     header: 'Action',
+//   },
+// ]
 
 // export const communityColumnsData: GridColDef[] = [
 //   { field: 'community', headerName: 'Community', width: 180 },

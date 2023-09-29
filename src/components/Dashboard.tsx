@@ -45,7 +45,7 @@ import DownloadIcon from '@mui/icons-material/Download'
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
 import { debounce } from 'lodash'
 import { communityRowsData } from '../data'
-// import DataTable from './testSorting'
+// import EnhancedTable from './testSorting'
 import FormatDialog from './FormatDialog'
 import { firstOptions } from './FormatDialog'
 import * as XLSX from 'xlsx'
@@ -92,7 +92,7 @@ const defaultTheme = createTheme({
 })
 
 export type ICommunities = {
-  id: number
+  communityId: number
   community: string
   forecasted: number
   projected: number
@@ -154,7 +154,9 @@ export default function Dashboard() {
     applySearch(searchValue)
   }
 
-  const handleClick = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+  const handleTabClick = (
+    event: React.MouseEvent<HTMLDivElement, MouseEvent>
+  ) => {
     let target = event.currentTarget.className
     setSelectedTab(target)
     filteredData.current = allCommunitiesCache.current.filter(function (el) {
@@ -205,7 +207,7 @@ export default function Dashboard() {
       ).map((row, index) => {
         const exportedRow = {
           Community: row.community,
-          'Community Id': row.id,
+          'Community Id': row.communityId,
           Forecasted: row.forecasted,
           Projected: row.projected,
           'Total Homesites': row.totalHomesites,
@@ -418,33 +420,6 @@ export default function Dashboard() {
               Community Overview
             </Typography>
             <Grid container spacing={1}>
-              {/* Chart */}
-              {/* <Grid item xs={12} md={8} lg={9}>
-                <Paper
-                  sx={{
-                    p: 2,
-                    display: 'flex',
-                    flexDirection: 'column',
-                    height: 240,
-                  }}
-                >
-                  <Chart />
-                </Paper>
-              </Grid> */}
-              {/* Recent Deposits */}
-              {/* <Grid item xs={12} md={4} lg={3}>
-                <Paper
-                  sx={{
-                    p: 2,
-                    display: 'flex',
-                    flexDirection: 'column',
-                    height: 240,
-                  }}
-                >
-                  <Deposits />
-                </Paper>
-              </Grid> */}
-              {/* Recent Orders */}
               <Grid>
                 <Paper
                   sx={{
@@ -464,7 +439,7 @@ export default function Dashboard() {
                       >
                         <div
                           className="All"
-                          onClick={handleClick}
+                          onClick={handleTabClick}
                           style={{
                             color:
                               selectedTab === 'All' ? '#005DAA' : '#1C2B36',
@@ -479,7 +454,7 @@ export default function Dashboard() {
                         </div>
                         <div
                           className="Active"
-                          onClick={handleClick}
+                          onClick={handleTabClick}
                           style={{
                             color:
                               selectedTab === 'Active' ? '#005DAA' : '#1C2B36',
@@ -496,7 +471,7 @@ export default function Dashboard() {
                         </div>
                         <div
                           className="Completed"
-                          onClick={handleClick}
+                          onClick={handleTabClick}
                           style={{
                             color:
                               selectedTab === 'Completed'
@@ -515,7 +490,7 @@ export default function Dashboard() {
                         </div>
                         <div
                           className="Archived"
-                          onClick={handleClick}
+                          onClick={handleTabClick}
                           style={{
                             color:
                               selectedTab === 'Archived'
@@ -613,7 +588,7 @@ export default function Dashboard() {
                     />
                   </div>
                   <CommunityList data={communities} />
-                  {/* <DataTable /> */}
+                  {/* <EnhancedTable /> */}
                 </Paper>
               </Grid>
             </Grid>
